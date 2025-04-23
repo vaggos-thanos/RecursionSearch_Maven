@@ -88,17 +88,14 @@ public class Book {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb
-                .append("\nTitle: ").append(title)
-                .append("\nAuthor: ").append(author)
-                .append("\nISBN: ").append(ISBN)
-                .append("\nPublisher: ").append(publisher)
-                .append("\nNumber of Pages: ").append(numberOfPages)
-                .append("\nYear Published: ").append(yearPublished)
-                .append("\nPrice: ").append(price)
-                .append("\n");
-        System.out.println(sb);
-        return null;
+        String temp = "\nTitle: " + title +
+                "\nAuthor: " + author +
+                "\nISBN: " + ISBN +
+                "\nPublisher: " + publisher +
+                "\nNumber of Pages: " + numberOfPages +
+                "\nYear Published: " + yearPublished +
+                "\nPrice: " + price +
+                "\n";
+        return temp;
     }
 }

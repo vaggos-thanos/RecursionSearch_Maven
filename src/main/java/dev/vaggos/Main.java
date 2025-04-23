@@ -58,7 +58,7 @@ public class Main {
                         book.setISBN(ISBN);
 
                         books[bookCounter] = book;
-                        book.toString();
+                        System.out.println(books[bookCounter]);
                         bookCounter++;
                         System.out.println("Book added successfully.");
                         System.out.println("Book details: ");
@@ -99,7 +99,7 @@ public class Main {
                         System.out.println("No books found within the given price range.");
                     } else {
                         for (Book book : booksInRange) {
-                            book.toString();
+                            System.out.println(book);
                         }
                     }
                     break;
@@ -109,7 +109,7 @@ public class Main {
                     for (Book book : books) {
                         if (book != null) {
                             System.out.println("Book " + (count + 1) + ":");
-                            book.toString();
+                            System.out.println(book);
                             System.out.println();
                             count++;
                         }

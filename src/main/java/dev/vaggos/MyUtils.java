@@ -76,17 +76,6 @@ public class MyUtils {
                 right = mid - 1;
             }
         }
-//        while (left <= right) {
-//            int mid = left + (right - left) / 2;
-//            int cmp = array[mid].compareTo(key);
-//            if (cmp == 0) {
-//                list.add(mid);
-//            } else if (cmp < 0) {
-//                left = mid + 1;
-//            } else {
-//                right = mid - 1;
-//            }
-//        }
         return list;
     }
 
@@ -102,12 +91,11 @@ public class MyUtils {
     }
 
     public static int menu(String[] options, String title, int actionNumber) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("     " + title);
+        String returnString = "     " + title;
         for (int i = 0; i < options.length; i++) {
-            sb.append("\n     ").append(i + 1).append(") ").append(options[i]);
+            returnString += "\n     " + (i + 1) + ") " + options[i];
         }
-        System.out.println(sb.toString());
+        System.out.println(returnString);
 
         return getInt("\nΔώστε Επιλογή (1-" + actionNumber + "): ");
     }
@@ -128,8 +116,8 @@ public class MyUtils {
     }
 
     public static boolean correctISBN(int yearPublished, String ISBN) {
-        if (yearPublished <= 2007) {
-            int total = 0;
+        int total = 0;
+        if(yearPublished <= 2007) {
             for (int i = 0; i < ISBN.length(); i++) {
                 int temp = Integer.parseInt(ISBN.substring(i, i + 1));
                 temp *= (10 - i);
@@ -138,23 +126,18 @@ public class MyUtils {
 
             total %= 11;
 
-            return total == 0;
-
         } else {
-            int total = 0;
             for (int i = 0; i < ISBN.length(); i++) {
                 int temp = Integer.parseInt(ISBN.substring(i, i + 1));
-                if (i % 2 == 0) {
-                    temp *= 1;
-                } else {
+                if (i % 2 != 0) {
                     temp *= 3;
                 }
                 total += temp;
             }
 
             total %= 10;
-            return total == 0;
         }
+        return total == 0;
     }
 
     private static String[] getISBNs(Book[] books) {
@@ -179,14 +162,14 @@ public class MyUtils {
 
     public static void search(Book[] books, String key) {
         boolean done = false;
-        int choise = 0;
+        int choice;
         while (!done) {
-            choise = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης", 3);
-            switch (choise) {
+            choice = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης", 3);
+            switch (choice) {
                 case 1: {
                     int index = seqSearch(getISBNs(books), key);
                     if (index != -1) {
-                        books[index].toString();
+                        System.out.println(books[index]);
                     } else {
                         System.out.println("Book not found.");
                     }
@@ -198,7 +181,7 @@ public class MyUtils {
                         System.out.println("Book not found.");
                     }
                     for (Integer index : indexes) {
-                        books[index].toString();
+                        System.out.println(books[index]);
                     }
                     break;
                 }
@@ -217,14 +200,14 @@ public class MyUtils {
 
     public static void search(Book[] books, int key) {
         boolean done = false;
-        int choise = 0;
+        int choice;
         while (!done) {
-            choise = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης", 3);
-            switch (choise) {
+            choice = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης", 3);
+            switch (choice) {
                 case 1: {
                     int index = seqSearch(getPublishedYears(books), key);
                     if (index != -1) {
-                        books[index].toString();
+                        System.out.println(books[index]);
                     } else {
                         System.out.println("Book not found.");
                     }
@@ -236,7 +219,7 @@ public class MyUtils {
                         System.out.println("Book not found.");
                     }
                     for (Integer index : indexes) {
-                        books[index].toString();
+                        System.out.println(books[index]);
                     }
                     break;
                 }
