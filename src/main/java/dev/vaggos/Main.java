@@ -28,7 +28,7 @@ public class Main {
 
         while (!done) {
 
-            int choice = MyUtils.menu(new String[]{"Εισαγωγή στοιχείων βιβλίου", "Αναζήτηση βιβλίου", "Εμφάνιση στοιχείων βιβλίων με τιμή μεταξύ κάποιων ορίων", "Εμφάνιση στοιχείων όλων των βιβλίων", "Τέλος"}, "Λίστα Επιλογών", 4);
+            int choice = MyUtils.menu(new String[]{"Εισαγωγή στοιχείων βιβλίου", "Αναζήτηση βιβλίου", "Εμφάνιση στοιχείων βιβλίων με τιμή μεταξύ κάποιων ορίων", "Ταξινόμηση βιβλίων", "Εμφάνιση στοιχείων όλων των βιβλίων", "Τέλος"}, "Λίστα Επιλογών");
 
             switch (choice) {
                 case 1 : {
@@ -87,7 +87,7 @@ public class Main {
                 case 2 : {
                     boolean subMenuDone = false;
                     while (!subMenuDone) {
-                        int subMenuChoice = MyUtils.menu(new String[]{"ISBN", "Έτος κυκλοφορίας", "Επιστροφή στην Αρχική Λίστα Επιλογών"}, "Επιλογή Πεδίου Αναζήτησης", 3);
+                        int subMenuChoice = MyUtils.menu(new String[]{"ISBN", "Έτος κυκλοφορίας", "Επιστροφή στην Αρχική Λίστα Επιλογών"}, "Επιλογή Πεδίου Αναζήτησης");
                         switch (subMenuChoice) {
                             case 1 : {
                                 MyUtils.search(books, MyUtils.getString("Enter book ISBN: "));
@@ -125,7 +125,10 @@ public class Main {
                     }
                     break;
                 }
-                case 4: {
+                case 4 : {
+
+                }
+                case 5 : {
                     int count = 0;
                     for (Book book : books) {
                         if (book != null) {
@@ -137,7 +140,7 @@ public class Main {
                     }
                     break;
                 }
-                case 5 : {
+                case 6 : {
                     done = true;
                     break;
                 }
