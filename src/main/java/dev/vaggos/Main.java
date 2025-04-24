@@ -8,6 +8,26 @@ public class Main {
         int bookCounter = 0;
         boolean done = false;
 
+        books[0] = new Book("Book1", "Author1", "Publisher1");
+        books[1] = new Book("Book2", "Author2", "Publisher2");
+        books[2] = new Book("Book3", "Author3", "Publisher3");
+
+        books[0].setNumberOfPages(100);
+        books[0].setYearPublished(2000);
+        books[0].setPrice(10.0f);
+        books[0].setISBN("0696340666");
+
+        books[1].setNumberOfPages(200);
+        books[1].setYearPublished(2012);
+        books[1].setPrice(20.0f);
+        books[1].setISBN("9784191774612");
+
+        books[2].setNumberOfPages(300);
+        books[2].setYearPublished(2012);
+        books[2].setPrice(30.0f);
+        books[2].setISBN("9788928072958");
+
+
         while (!done) {
 
             int choice = MyUtils.menu(new String[]{"Εισαγωγή στοιχείων βιβλίου", "Αναζήτηση βιβλίου", "Εμφάνιση στοιχείων βιβλίων με τιμή μεταξύ κάποιων ορίων", "Εμφάνιση στοιχείων όλων των βιβλίων", "Τέλος"}, "Λίστα Επιλογών", 4);

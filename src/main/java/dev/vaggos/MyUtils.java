@@ -2,6 +2,7 @@ package dev.vaggos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MyUtils {
 
@@ -26,20 +27,27 @@ public class MyUtils {
     }
 
     // Binary search for integers
-    public static List<Integer> binSearch(int[] array, int key) {
-        List<Integer> list = new ArrayList<>();
+    public static int[] binSearch(int[] array, int key) {
+        int[] list = new int[array.length];
+        for (int index = 0; index < array.length; index++) {
+            list[index] = -1;
+        }
         int left = 0;
         int right = array.length - 1;
+        int count = 0;
         while (left <= right) {
             int mid = left + (right - left) / 2;
             if (array[mid] == key) {
                 int temp = mid;
                 while (temp >= left && array[temp] == key) {
-                    list.add(temp--);
+                    list[count] = temp--;
+                    count++;
+
                 }
                 temp = mid + 1;
                 while (temp <= right && array[temp] == key) {
-                    list.add(temp++);
+                    list[count] = temp++;
+                    count++;
                 }
                 break;
             } else if (array[mid] < key) {
@@ -52,8 +60,12 @@ public class MyUtils {
     }
 
     // Binary search for strings
-    public static List<Integer> binSearch(String[] array, String key) {
-        List<Integer> list = new ArrayList<>();
+    public static int[] binSearch(String[] array, String key) {
+        int[] list = new int[array.length];
+        for (int index = 0; index < array.length; index++) {
+            list[index] = -1;
+        }
+        int count = 0;
         int left = 0;
         int right = array.length - 1;
         while (left <= right) {
@@ -63,11 +75,13 @@ public class MyUtils {
             if (cmp == 0) {
                 int temp = mid;
                 while (temp >= left && array[temp].equals(key)) {
-                    list.add(temp--);
+                    list[count] = temp--;
+                    count++;
                 }
                 temp = mid + 1;
                 while (temp <= right && array[temp].equals(key)) {
-                    list.add(temp++);
+                    list[count] = temp++;
+                    count++;
                 }
                 break;
             } else if (cmp < 0) {
@@ -102,17 +116,17 @@ public class MyUtils {
 
     public static int getInt(String prompt) {
         System.out.print(prompt);
-        return new java.util.Scanner(System.in).nextInt();
+        return new Scanner(System.in).nextInt();
     }
 
     public static float getFloat(String prompt) {
         System.out.print(prompt);
-        return new java.util.Scanner(System.in).nextFloat();
+        return new Scanner(System.in).nextFloat();
     }
 
     public static String getString(String prompt) {
         System.out.print(prompt);
-        return new java.util.Scanner(System.in).nextLine();
+        return new Scanner(System.in).nextLine();
     }
 
     public static boolean correctISBN(int yearPublished, String ISBN) {
@@ -160,6 +174,15 @@ public class MyUtils {
         return publishedYears.stream().mapToInt(i -> i).toArray();
     }
 
+    private static boolean isBinEmpty(int[] array) {
+        for (int i : array) {
+            if (i != -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void search(Book[] books, String key) {
         boolean done = false;
         int choice;
@@ -176,11 +199,14 @@ public class MyUtils {
                     break;
                 }
                 case 2: {
-                    List<Integer> indexes = binSearch(getISBNs(books), key);
-                    if (indexes.isEmpty()) {
+                    int[] indexes = binSearch(getISBNs(books), key);
+                    if (isBinEmpty(indexes)) {
                         System.out.println("Book not found.");
                     }
                     for (Integer index : indexes) {
+                        if (index == -1) {
+                            break;
+                        }
                         System.out.println(books[index]);
                     }
                     break;
@@ -214,11 +240,14 @@ public class MyUtils {
                     break;
                 }
                 case 2: {
-                    List<Integer> indexes = binSearch(getPublishedYears(books), key);
-                    if (indexes.isEmpty()) {
+                    int[] indexes = binSearch(getPublishedYears(books), key);
+                    if (isBinEmpty(indexes)) {
                         System.out.println("Book not found.");
                     }
                     for (Integer index : indexes) {
+                        if (index == -1) {
+                            break;
+                        }
                         System.out.println(books[index]);
                     }
                     break;
