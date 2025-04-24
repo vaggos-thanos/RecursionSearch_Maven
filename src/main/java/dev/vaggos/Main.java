@@ -1,7 +1,5 @@
 package dev.vaggos;
 
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Book[] books = new Book[10];
@@ -114,13 +112,16 @@ public class Main {
                 case 3 : {
                     float minPrice = MyUtils.getFloat("Enter minimum price: ");
                     float maxPrice = MyUtils.getFloat("Enter maximum price: ");
-                    List<Book> booksInRange = MyUtils.valueSearch(books, minPrice, maxPrice);
-                    if (booksInRange.isEmpty()) {
-                        System.out.println("No books found within the given price range.");
-                    } else {
-                        for (Book book : booksInRange) {
+                    Book[] booksInRange = MyUtils.valueSearch(books, minPrice, maxPrice);
+                    int count = 0;
+                    for (Book book : booksInRange) {
+                        if (book != null) {
                             System.out.println(book);
+                            count++;
                         }
+                    }
+                    if (count == 0) {
+                        System.out.println("No books found within the given price range.");
                     }
                     break;
                 }

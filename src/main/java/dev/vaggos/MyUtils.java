@@ -1,7 +1,5 @@
 package dev.vaggos;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class MyUtils {
@@ -94,11 +92,12 @@ public class MyUtils {
     }
 
     // Search for books within a price range
-    public static List<Book> valueSearch(Book[] books, float minPrice, float maxPrice) {
-        List<Book> booksInRange = new ArrayList<>();
+    public static Book[] valueSearch(Book[] books, float minPrice, float maxPrice) {
+        Book[] booksInRange = new Book[books.length];
+        int count = 0;
         for (Book book : books) {
             if (book != null && book.getPrice() >= minPrice && book.getPrice() <= maxPrice) {
-                booksInRange.add(book);
+                booksInRange[count++] = book;
             }
         }
         return booksInRange;
@@ -155,23 +154,25 @@ public class MyUtils {
     }
 
     private static String[] getISBNs(Book[] books) {
-        List<String> isbnList = new ArrayList<>();
+        String[] isbnList = new String[books.length];
+        int count = 0;
         for (Book book : books) {
             if (book != null) {
-                isbnList.add(book.getISBN());
+                isbnList[count++] = book.getISBN();
             }
         }
-        return isbnList.toArray(new String[0]);
+        return isbnList;
     }
 
     private static int[] getPublishedYears(Book[] books) {
-        List<Integer> publishedYears = new ArrayList<>();
+        int[] publishedYears = new int[books.length];
+        int count = 0;
         for (Book book : books) {
             if (book != null) {
-                publishedYears.add(book.getYearPublished());
+                publishedYears[count++] = book.getYearPublished();
             }
         }
-        return publishedYears.stream().mapToInt(i -> i).toArray();
+        return publishedYears;
     }
 
     private static boolean isBinEmpty(int[] array) {
