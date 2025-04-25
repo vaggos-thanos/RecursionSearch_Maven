@@ -3,6 +3,7 @@ package dev.vaggos;
 import java.util.Scanner;
 
 public class MyUtils {
+    private static int booksSorted = 0;
 
     private static String[] getISBNs(Book[] books) {
         String[] isbnList = new String[books.length];
@@ -187,19 +188,55 @@ public class MyUtils {
     public static void search(Book[] books, String key) {
         boolean done = false;
         int choice;
-        while (!done) {
-            choice = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης");
-            switch (choice) {
-                case 1: {
+        boolean automated = true;
+        if (!automated) {
+            while (!done) {
+                choice = menu(new String[]{"Σειριακή Αναζήτηση", "Δυαδική Αναζήτηση (Προσοχή ο πίνακας πρέπει να είναι ταξινομημένος κατά το πεδίο αναζήτησης)", "Επιστροφή στην Επιλογή Πεδίου Αναζήτησης"}, "Επιλογή Μεθόδου Αναζήτησης");
+                switch (choice) {
+                    case 1: {
+                        int index = seqSearch(getISBNs(books), key);
+                        if (index != -1) {
+                            System.out.println(books[index]);
+                        } else {
+                            System.out.println("Book not found.");
+                        }
+                        break;
+                    }
+                    case 2: {
+                        int[] indexes = binSearch(getISBNs(books), key);
+                        if (isBinEmpty(indexes)) {
+                            System.out.println("Book not found.");
+                        }
+                        for (Integer index : indexes) {
+                            if (index == -1) {
+                                break;
+                            }
+                            System.out.println(books[index]);
+                        }
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Returning to the main menu.");
+                        done = true;
+                        break;
+                    }
+                    default: {
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                    }
+                }
+            }
+        } else {
+            if (isBooksSorted(books)) {
+                int sortType = getBooksSorted();
+                if (sortType == 1) {  // Published Year
                     int index = seqSearch(getISBNs(books), key);
                     if (index != -1) {
                         System.out.println(books[index]);
                     } else {
                         System.out.println("Book not found.");
                     }
-                    break;
-                }
-                case 2: {
+                } else if (sortType == 2) { // ISBN
                     int[] indexes = binSearch(getISBNs(books), key);
                     if (isBinEmpty(indexes)) {
                         System.out.println("Book not found.");
@@ -210,16 +247,13 @@ public class MyUtils {
                         }
                         System.out.println(books[index]);
                     }
-                    break;
                 }
-                case 3: {
-                    System.out.println("Returning to the main menu.");
-                    done = true;
-                    break;
-                }
-                default: {
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+            } else {
+                int index = seqSearch(getISBNs(books), key);
+                if (index != -1) {
+                    System.out.println(books[index]);
+                } else {
+                    System.out.println("Book not found.");
                 }
             }
         }
@@ -377,5 +411,62 @@ public class MyUtils {
             j++;
             k++;
         }
+    }
+
+    public static boolean isBooksEmpty(Book[] books) {
+        for (Book book : books) {
+            if (book != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isBooksSorted(Book[] books) {
+        if (books == null || books.length == 0) {
+            return true; // Empty array is considered sorted
+        }
+        if (booksSorted > 0 && booksSorted <= 2 ) {
+            return true; // Already sorted
+        }
+        boolean sorted = true;
+        for (int i = 0; i < books.length - 1; i++) {
+            if (books[i] != null && books[i + 1] != null) {
+                if (books[i].getISBN().compareTo(books[i + 1].getISBN()) > 0) {
+                    sorted = false;
+                    break;
+                }
+            }
+        }
+        return sorted;
+    }
+
+    public static int getBooksSorted() {
+        return booksSorted;
+    }
+
+    public static void sortBooksByField(Book[] books, String field, int methodChoice) {
+        switch (methodChoice) {
+            case 1: // Bubble Sort
+                //TODO: SORTING NOT IMPLEMENTED
+                break;
+            case 2: // Insertion Sort
+                //TODO: SORTING NOT IMPLEMENTED
+                break;
+            case 3: // Selection Sort
+                //TODO: SORTING NOT IMPLEMENTED
+                break;
+            case 4: // Quick Sort
+                //TODO: SORTING NOT IMPLEMENTED
+                break;
+            case 5: // Merge Sort
+                //TODO: SORTING NOT IMPLEMENTED
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid sorting method.");
+        }
+
+        // Update the booksSorted variable
+        booksSorted = field.equals("isbn") ? 1 : field.equals("year") ? 2 : 0;
     }
 }

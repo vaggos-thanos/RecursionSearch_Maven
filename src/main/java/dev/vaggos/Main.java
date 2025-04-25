@@ -85,6 +85,10 @@ public class Main {
                     break;
                 }
                 case 2 : {
+                    if (MyUtils.isBooksEmpty(books)){
+                        System.out.println("No books available for search.");
+                        break;
+                    }
                     boolean subMenuDone = false;
                     while (!subMenuDone) {
                         int subMenuChoice = MyUtils.menu(new String[]{"ISBN", "Έτος κυκλοφορίας", "Επιστροφή στην Αρχική Λίστα Επιλογών"}, "Επιλογή Πεδίου Αναζήτησης");
@@ -110,25 +114,90 @@ public class Main {
                     break;
                 }
                 case 3 : {
-                    float minPrice = MyUtils.getFloat("Enter minimum price: ");
-                    float maxPrice = MyUtils.getFloat("Enter maximum price: ");
-                    Book[] booksInRange = MyUtils.valueSearch(books, minPrice, maxPrice);
-                    int count = 0;
-                    for (Book book : booksInRange) {
-                        if (book != null) {
-                            System.out.println(book);
-                            count++;
-                        }
+                    if (MyUtils.isBooksEmpty(books)){
+                        System.out.println("No books available for search.");
+                        break;
                     }
-                    if (count == 0) {
-                        System.out.println("No books found within the given price range.");
+                    try {
+                        float minPrice = MyUtils.getFloat("Enter minimum price: ");
+                        float maxPrice = MyUtils.getFloat("Enter maximum price: ");
+                        Book[] booksInRange = MyUtils.valueSearch(books, minPrice, maxPrice);
+                        int count = 0;
+                        for (Book book : booksInRange) {
+                            if (book != null) {
+                                System.out.println(book);
+                                count++;
+                            }
+                        }
+                        if (count == 0) {
+                            System.out.println("No books found within the given price range.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter numeric values for the price range.");
                     }
                     break;
                 }
-                case 4 : {
+                case 4: {
+                    if (MyUtils.isBooksEmpty(books)) {
+                        System.out.println("No books available for sorting.");
+                        break;
+                    }
 
+                    boolean sortingDone = false;
+                    while (!sortingDone) {
+                        int fieldChoice = MyUtils.menu(new String[]{
+                            "Όνομα Συγγραφέα",
+                            "ISBN",
+                            "Έτος κυκλοφορίας",
+                            "Τιμή βιβλίου",
+                            "Επιστροφή στην Αρχική Λίστα Επιλογών"
+                        }, "Επιλογή Πεδίου Ταξινόμησης");
+
+                        if (fieldChoice == 5) {
+                            break; // Επιστροφή στην αρχική λίστα επιλογών
+                        }
+
+                        int methodChoice = MyUtils.menu(new String[]{
+                            "Bubblesort",
+                            "Ταξινόμηση με Εισαγωγή",
+                            "Ταξινόμηση με Επιλογή",
+                            "Γρήγορη Ταξινόμηση",
+                            "Ταξινόμηση με Συγχώνευση",
+                            "Επιστροφή στην Επιλογή Πεδίου Ταξινόμησης"
+                        }, "Επιλογή Μεθόδου Ταξινόμησης");
+
+                        if (methodChoice == 6) {
+                            continue; // Επιστροφή στην επιλογή πεδίου ταξινόμησης
+                        }
+
+                        switch (fieldChoice) {
+                            case 1: // Όνομα Συγγραφέα
+                                MyUtils.sortBooksByField(books, "author", methodChoice);
+                                break;
+                            case 2: // ISBN
+                                MyUtils.sortBooksByField(books, "isbn", methodChoice);
+                                break;
+                            case 3: // Έτος κυκλοφορίας
+                                MyUtils.sortBooksByField(books, "year", methodChoice);
+                                break;
+                            case 4: // Τιμή βιβλίου
+                                MyUtils.sortBooksByField(books, "price", methodChoice);
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+
+                        System.out.println("Books sorted successfully.");
+                        sortingDone = true; // Επιστροφή στην αρχική λίστα επιλογών μετά την ταξινόμηση
+                    }
+                    break;
                 }
                 case 5 : {
+                    if (MyUtils.isBooksEmpty(books)){
+                        System.out.println("No books available for display.");
+                        break;
+                    }
                     int count = 0;
                     for (Book book : books) {
                         if (book != null) {
